@@ -4,8 +4,10 @@ import axios from "axios";
 
 function App() {
   const [mode, setmode] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   const getMode = async () => {
+    setLoading(true);
     try {
       const response = await axios.get(
         `https://api-iot-testing.vercel.app/getMode`
@@ -14,15 +16,20 @@ function App() {
     } catch (error) {
       console.log(error);
     }
+    setLoading(false);
   };
 
   const handleChangeMode = async () => {
+    setLoading(true);
     try {
-      await axios.post(`https://api-iot-testing.vercel.app/changeMode`);
-      getMode();
+      const response = await axios.post(
+        `https://api-iot-testing.vercel.app/changeMode`
+      );
+      setmode(response.data.mode);
     } catch (error) {
       console.log(error);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -34,11 +41,19 @@ function App() {
       <div className="h3 mb-4">My Control Esp32</div>
       <button
         onClick={() => handleChangeMode()}
-        className={
-          mode ? "btn btn-lg btn-success pt-1" : "btn btn-lg btn-danger pt-1"
-        }
+        className={`btn btn-lg ${
+          mode ? "btn-success" : "btn-danger"
+        } py-3 px-5 ${loading ? "disabled" : ""}`}
       >
-        {mode ? "ON" : "OFF"}
+        {loading ? (
+          <div className="spinner-border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
+        ) : mode ? (
+          "ON"
+        ) : (
+          "OFF"
+        )}
       </button>
     </>
   );
