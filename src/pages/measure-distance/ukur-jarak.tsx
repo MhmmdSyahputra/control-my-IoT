@@ -35,9 +35,9 @@ export const UkurJarak = () => {
         className="progress"
         role="progressbar"
         aria-label="Basic example"
-        aria-valuenow="100"
-        aria-valuemin="0"
-        aria-valuemax="100"
+        aria-valuenow={100}
+        aria-valuemin={0}
+        aria-valuemax={500}
       >
         <div
           className="progress-bar"
