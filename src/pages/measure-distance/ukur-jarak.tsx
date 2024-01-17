@@ -10,7 +10,7 @@ export const UkurJarak = () => {
   useEffect(() => {
     const intervalId = setInterval(() => {
       handleGetDistance();
-    }, 500);
+    }, 150);
 
     return () => clearInterval(intervalId);
   }, []);
